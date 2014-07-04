@@ -1,4 +1,4 @@
-FROM tsunammis/nginx
+FROM stan/nginx
 
 MAINTAINER Stan Chollet <stanislas.chollet@gmail.com>
 
