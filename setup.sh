@@ -5,7 +5,6 @@ envs=`printenv`
 
 for env in $envs
 do
-	IFS== read name value <<< "$env"
-	sed -i "s|\${${name}}|${value}|g" /etc/nginx/sites-enabled/default
-	sed -i "s|\${${name}}|${value}|g" /etc/nginx/sites-available/default
+    IFS== read name value <<< "$env"
+    sed -i "s|\${${name}}|${value}|g" /etc/nginx.conf
 done

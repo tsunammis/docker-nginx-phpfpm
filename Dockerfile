@@ -1,12 +1,12 @@
-FROM stan/nginx
+FROM nginx
 
 MAINTAINER Stan Chollet <stanislas.chollet@gmail.com>
 
 # NGINX
-ADD default /etc/nginx/sites-available/default
-ADD default /etc/nginx/sites-enabled/default
+ADD nginx.conf /etc/nginx.conf
 
 # PHP Welcome page
+RUN mkdir /var/www /var/logs
 RUN touch /var/www/index.php
 RUN echo '<?php $w = "Steve"; echo "Welcome $w"; ?>' > /var/www/index.php
 RUN chown -R www-data:www-data -R /var/www
@@ -17,10 +17,9 @@ RUN chmod 644 /var/www/index.php
 ADD setup.sh /root/setup.sh
 RUN chmod +x /root/setup.sh
 
-# Clear
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+WORKDIR /var/www
 
 # Expose HTTP Port
 EXPOSE 80
 
-CMD /bin/bash /root/setup.sh && service nginx start
+CMD /bin/bash /root/setup.sh && nginx
